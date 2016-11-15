@@ -1,7 +1,8 @@
 // @flow
 import React from 'react';
 import { storiesOf } from '@kadira/react-native-storybook';
-import ConversationList from '../../src/ConversationList.js';
+import ConversationList from '../../src/ConversationList';
+import Register from '../../src/Register';
 
 const messages = [
   {
@@ -19,4 +20,7 @@ const messages = [
 storiesOf('Main')
   .add('ConversationList', () => (
     <ConversationList messages={messages} />
-  ));
+  ))
+  .add('Register', () => (
+    <Register />
+  ))
