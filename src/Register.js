@@ -2,12 +2,13 @@
 import React from 'react';
 import {
   Button,
-  Text,
   TextInput,
   View
 } from 'react-native';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 
-const Register = () => (
+const Register = (props) => (
   <View>
     <TextInput
       keyboardType="email-address"
@@ -16,8 +17,26 @@ const Register = () => (
       placeholder="Password"
       secureTextEntry />
     <Button
-      title="Register" />
+      title="Register"
+      onPress={() => props.submit({ username: "johnyj", password: "fdffdfdf" })}/>
   </View>
 );
 
-export default Register;
+const registerUser = gql`
+  mutation CreateUser($user: CreateUserInput!) {
+    createUser(input: $user) {
+      changedUser {
+        id,
+        username
+      }
+    }
+  }
+`;
+
+export default graphql(registerUser, {
+  props: ({ mutate }) => ({
+    submit: (user) => mutate({
+      variables: { user }
+    })
+  })
+})(Register);
